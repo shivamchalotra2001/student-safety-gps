@@ -1,171 +1,617 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Student Safety GPS Test</title>
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Student Safety</title>
+
 <style>
-  * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #f2f5f8;
-    text-align: center;
-    color: #111;
-    padding: 20px;
-  }
-  .card {
-    max-width: 430px;
-    margin: 20px auto;
-    background: white;
-    padding: 25px;
-    border-radius: 18px;
-    box-shadow: 0 4px 14px rgba(0,0,0,.12);
-  }
-  h1 { margin: 5px 0 8px; }
-  .sub { color: #666; margin-bottom: 20px; }
-  #status {
-    font-size: 34px;
-    font-weight: bold;
-    margin: 20px 0 10px;
-  }
-  #distance { font-size: 22px; font-weight: bold; }
-  #accuracy, #coords, #updated {
-    color: #666;
-    margin-top: 10px;
-    font-size: 14px;
-  }
-  button {
-    border: 0;
-    border-radius: 12px;
-    padding: 15px 25px;
-    font-size: 17px;
-    font-weight: bold;
-    background: #222;
-    color: white;
-    margin-top: 18px;
-  }
-  .in { color: #159447; }
-  .out { color: #d62828; }
-  .warn { color: #e58a00; }
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+
+  margin: 0;
+
+  font-family: Arial, sans-serif;
+
+  background: #f2f5f8;
+
+  color: #222;
+
+  text-align: center;
+
+  padding: 20px;
+}
+
+h1 {
+
+  margin: 5px 0;
+
+}
+
+.subtitle {
+
+  color: #666;
+
+  margin-bottom: 20px;
+
+}
+
+.card {
+
+  background: white;
+
+  max-width: 430px;
+
+  margin: 15px auto;
+
+  padding: 22px;
+
+  border-radius: 18px;
+
+  box-shadow:
+    0 4px 12px rgba(0,0,0,0.12);
+
+}
+
+.icon {
+
+  font-size: 35px;
+
+}
+
+.label {
+
+  color: #777;
+
+  font-size: 15px;
+
+  margin-top: 8px;
+
+}
+
+.value {
+
+  font-size: 30px;
+
+  font-weight: bold;
+
+  margin-top: 8px;
+
+}
+
+.small {
+
+  color: #777;
+
+  font-size: 14px;
+
+  margin-top: 8px;
+
+}
+
+.green {
+
+  color: #159447;
+
+}
+
+.red {
+
+  color: #d62828;
+
+}
+
+.orange {
+
+  color: #e58a00;
+
+}
+
+button {
+
+  border: none;
+
+  border-radius: 12px;
+
+  padding: 14px 25px;
+
+  font-size: 16px;
+
+  font-weight: bold;
+
+  background: #222;
+
+  color: white;
+
+  margin-top: 15px;
+
+}
+
+.location-card {
+
+  border-top: 5px solid #159447;
+
+}
+
+.gas-card {
+
+  border-top: 5px solid #159447;
+
+}
+
 </style>
+
 </head>
 
+
 <body>
-<div class="card">
-  <h1>🎒 Student Safety</h1>
-  <div class="sub">GPS School-Area Test</div>
 
-  <div id="status" class="warn">📍 CHECKING...</div>
 
-  <div id="distance">Waiting for GPS...</div>
-  <div id="accuracy"></div>
-  <div id="coords"></div>
-  <div id="updated"></div>
+<h1>🎒 Student Safety</h1>
 
-  <button onclick="startGPS()">CHECK LOCATION</button>
+<div class="subtitle">
 
-  <p style="color:#777; margin-top:22px;">
-    Test location: RoboHub<br>
-    30.8527404, 75.8077217<br>
-    Allowed radius: 200 metres
-  </p>
+Smart School Bag Safety System
+
 </div>
 
+
+<!-- LOCATION -->
+
+<div class="card location-card">
+
+<div class="icon">
+
+📍
+
+</div>
+
+<div class="label">
+
+Student Location
+
+</div>
+
+<div id="locationStatus"
+class="value green">
+
+CHECKING...
+
+</div>
+
+<div id="distance"
+class="small">
+
+Getting GPS location...
+
+</div>
+
+<div id="accuracy"
+class="small">
+
+</div>
+
+<button onclick="startGPS()">
+
+CHECK LOCATION
+
+</button>
+
+</div>
+
+
+<!-- TEMPERATURE -->
+
+<div class="card">
+
+<div class="icon">
+
+🌡️
+
+</div>
+
+<div class="label">
+
+Temperature
+
+</div>
+
+<div class="value">
+
+31.2 °C
+
+</div>
+
+<div class="small">
+
+DHT11
+
+</div>
+
+</div>
+
+
+<!-- HUMIDITY -->
+
+<div class="card">
+
+<div class="icon">
+
+💧
+
+</div>
+
+<div class="label">
+
+Humidity
+
+</div>
+
+<div class="value">
+
+75 %
+
+</div>
+
+<div class="small">
+
+DHT11
+
+</div>
+
+</div>
+
+
+<!-- GAS -->
+
+<div class="card gas-card">
+
+<div class="icon">
+
+🌫️
+
+</div>
+
+<div class="label">
+
+Smoke / Gas Level
+
+</div>
+
+<div id="gasValue"
+class="value green">
+
+342
+
+</div>
+
+<div id="gasStatus"
+class="value green">
+
+🟢 SAFE
+
+</div>
+
+<div class="small">
+
+MQ-2
+
+</div>
+
+</div>
+
+
+<!-- WEATHER PLACEHOLDER -->
+
+<div class="card">
+
+<div class="icon">
+
+🌦️
+
+</div>
+
+<div class="label">
+
+Upcoming Weather
+
+</div>
+
+<div class="value">
+
+Coming Soon
+
+</div>
+
+<div class="small">
+
+Next 1 hour forecast
+
+</div>
+
+</div>
+
+
 <script>
+
+
+// =====================================
+// ROBOHUB TEST LOCATION
+// =====================================
+
 const TARGET_LAT = 30.8527404;
+
 const TARGET_LON = 75.8077217;
-const RADIUS_METERS = 200;
 
-let watchId = null;
+const ALLOWED_RADIUS = 200;
 
-function distanceMeters(lat1, lon1, lat2, lon2) {
+
+// =====================================
+// DISTANCE CALCULATION
+// =====================================
+
+function calculateDistance(
+  lat1,
+  lon1,
+  lat2,
+  lon2
+) {
+
   const R = 6371000;
-  const p1 = lat1 * Math.PI / 180;
-  const p2 = lat2 * Math.PI / 180;
-  const dLat = (lat2 - lat1) * Math.PI / 180;
-  const dLon = (lon2 - lon1) * Math.PI / 180;
+
+  const dLat =
+    (lat2 - lat1)
+    * Math.PI / 180;
+
+  const dLon =
+    (lon2 - lon1)
+    * Math.PI / 180;
 
   const a =
-    Math.sin(dLat / 2) ** 2 +
-    Math.cos(p1) * Math.cos(p2) *
-    Math.sin(dLon / 2) ** 2;
 
-  return 2 * R * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    Math.sin(dLat / 2) *
+    Math.sin(dLat / 2)
+
+    +
+
+    Math.cos(
+      lat1 * Math.PI / 180
+    )
+
+    *
+
+    Math.cos(
+      lat2 * Math.PI / 180
+    )
+
+    *
+
+    Math.sin(dLon / 2) *
+    Math.sin(dLon / 2);
+
+  const c =
+
+    2 *
+
+    Math.atan2(
+      Math.sqrt(a),
+      Math.sqrt(1 - a)
+    );
+
+  return R * c;
+
 }
 
-function success(position) {
-  const lat = position.coords.latitude;
-  const lon = position.coords.longitude;
-  const accuracy = position.coords.accuracy;
-  const distance = distanceMeters(lat, lon, TARGET_LAT, TARGET_LON);
 
-  const status = document.getElementById("status");
+// =====================================
+// GPS SUCCESS
+// =====================================
 
-  if (distance <= RADIUS_METERS) {
-    status.textContent = "🟢 IN AREA";
-    status.className = "in";
-  } else {
-    status.textContent = "🔴 OUT OF AREA";
-    status.className = "out";
+function locationSuccess(position) {
+
+  const lat =
+    position.coords.latitude;
+
+  const lon =
+    position.coords.longitude;
+
+  const accuracy =
+    position.coords.accuracy;
+
+
+  const distance =
+    calculateDistance(
+      lat,
+      lon,
+      TARGET_LAT,
+      TARGET_LON
+    );
+
+
+  const status =
+    document.getElementById(
+      "locationStatus"
+    );
+
+  const distanceBox =
+    document.getElementById(
+      "distance"
+    );
+
+  const accuracyBox =
+    document.getElementById(
+      "accuracy"
+    );
+
+
+  if (
+    distance <=
+    ALLOWED_RADIUS
+  ) {
+
+    status.innerHTML =
+      "🟢 IN AREA";
+
+    status.className =
+      "value green";
+
   }
 
-  document.getElementById("distance").textContent =
-    "Distance: " + Math.round(distance) + " m";
+  else {
 
-  document.getElementById("accuracy").textContent =
-    "GPS accuracy: ±" + Math.round(accuracy) + " m";
+    status.innerHTML =
+      "🔴 OUT OF AREA";
 
-  document.getElementById("coords").textContent =
-    "Phone: " + lat.toFixed(6) + ", " + lon.toFixed(6);
+    status.className =
+      "value red";
 
-  document.getElementById("updated").textContent =
-    "Updated: " + new Date().toLocaleTimeString();
-}
-
-function error(err) {
-  const status = document.getElementById("status");
-  status.textContent = "⚠️ LOCATION ERROR";
-  status.className = "warn";
-
-  let message = "Unable to get location.";
-
-  if (err.code === 1) {
-    message = "Location permission denied. Allow location access for this website in iPhone Settings.";
-  } else if (err.code === 2) {
-    message = "Location unavailable. Turn on Location Services.";
-  } else if (err.code === 3) {
-    message = "GPS request timed out. Try again outdoors.";
   }
 
-  document.getElementById("distance").textContent = message;
+
+  distanceBox.innerHTML =
+
+    "Distance: " +
+
+    Math.round(distance) +
+
+    " metres";
+
+
+  accuracyBox.innerHTML =
+
+    "GPS accuracy: ±" +
+
+    Math.round(accuracy) +
+
+    " metres";
+
 }
+
+
+// =====================================
+// GPS ERROR
+// =====================================
+
+function locationError(error) {
+
+  const status =
+    document.getElementById(
+      "locationStatus"
+    );
+
+  const distance =
+    document.getElementById(
+      "distance"
+    );
+
+
+  status.innerHTML =
+    "⚠️ LOCATION ERROR";
+
+  status.className =
+    "value orange";
+
+
+  if (error.code === 1) {
+
+    distance.innerHTML =
+      "Location permission denied.";
+
+  }
+
+  else if (error.code === 2) {
+
+    distance.innerHTML =
+      "Location unavailable.";
+
+  }
+
+  else if (error.code === 3) {
+
+    distance.innerHTML =
+      "GPS request timed out.";
+
+  }
+
+  else {
+
+    distance.innerHTML =
+      "Unable to get location.";
+
+  }
+
+}
+
+
+// =====================================
+// START GPS
+// =====================================
 
 function startGPS() {
-  if (!("geolocation" in navigator)) {
-    document.getElementById("status").textContent = "❌ GPS NOT SUPPORTED";
+
+  if (
+    !navigator.geolocation
+  ) {
+
+    document.getElementById(
+      "locationStatus"
+    ).innerHTML =
+      "GPS NOT SUPPORTED";
+
     return;
+
   }
 
-  document.getElementById("status").textContent = "📍 GETTING GPS...";
-  document.getElementById("status").className = "warn";
 
-  if (watchId !== null) {
-    navigator.geolocation.clearWatch(watchId);
-  }
+  document.getElementById(
+    "locationStatus"
+  ).innerHTML =
+    "📍 GETTING GPS...";
 
-  watchId = navigator.geolocation.watchPosition(
-    success,
-    error,
+
+  navigator.geolocation.getCurrentPosition(
+
+    locationSuccess,
+
+    locationError,
+
     {
+
       enableHighAccuracy: true,
+
       timeout: 20000,
+
       maximumAge: 5000
+
     }
+
   );
+
 }
 
-window.addEventListener("load", startGPS);
+
+// =====================================
+// AUTOMATIC GPS
+// =====================================
+
+window.onload = function() {
+
+  startGPS();
+
+};
+
 </script>
+
+
 </body>
+
 </html>
